@@ -42,7 +42,7 @@ function App() {
           options={{
             title: 'BIENVENIDO', 
             headerTransparent: true,
-            headerTintColor: '#e0e0ce',
+            headerTintColor: '#000',
             headerTitleStyle: {
               fontWeight: 'bold',
             },
