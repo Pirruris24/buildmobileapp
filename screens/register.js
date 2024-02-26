@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {Alert} from 'react-native';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { styles } from './../styles';
+import { styles } from './../styles/styles';
 import { useNavigation } from '@react-navigation/native';
-// import AppContent from './../App.js';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -37,7 +36,7 @@ const RegisterScreen = () => {
   };
 
   const signUpButton = () => {
-    console.log('Botón presionado');
+    // console.log('Botón presionado');
 
     if (!name || !lastName || !email || !password || !confirmPassword) {
       Alert.alert('Campos Vacíos', 'Por favor, complete todos los campos.');
@@ -70,14 +69,14 @@ const RegisterScreen = () => {
     <View style={styles.container}>
       <Text style={[styles.titulo, { fontSize: 60 }]}>REGISTER</Text>
       <TextInput
-        placeholder='Name(s)'
+        placeholder='Nombre(s)'
         placeholderTextColor="#E0E0CE"
         style={styles.textInput}
         value={name}
         onChangeText={setName}
       />
       <TextInput
-        placeholder='Last Name(s)'
+        placeholder='Apellido(s)'
         placeholderTextColor="#E0E0CE"
         style={styles.textInput}
         value={lastName}
@@ -92,7 +91,7 @@ const RegisterScreen = () => {
       />
       <View style={styles.passwordInputContainer}>
         <TextInput
-          placeholder='Password'
+          placeholder='Contraseña'
           placeholderTextColor="#E0E0CE"
           style={styles.textInput}
           onChangeText={handlePasswordChange}
@@ -100,12 +99,12 @@ const RegisterScreen = () => {
           value={password}
         />
         <TouchableOpacity onPress={handleTogglePasswordVisibility1} style={styles.togglePasswordButton}>
-          <Text style={styles.togglePasswordButtonText}>{hidePassword1 ? 'Show' : 'Hide'}</Text>
+          <Text style={styles.togglePasswordButtonText}>{hidePassword1 ? 'Mostrar' : 'Ocultar'}</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.passwordInputContainer}>
         <TextInput
-          placeholder='Confirm Password'
+          placeholder='Confirmar Contraseña'
           placeholderTextColor="#E0E0CE"
           style={styles.textInput}
           onChangeText={handleConfirmPasswordChange}
@@ -113,11 +112,11 @@ const RegisterScreen = () => {
           value={confirmPassword}
         />
         <TouchableOpacity onPress={handleTogglePasswordVisibility2} style={styles.togglePasswordButton}>
-          <Text style={styles.togglePasswordButtonText}>{hidePassword2 ? 'Show' : 'Hide'}</Text>
+          <Text style={styles.togglePasswordButtonText}>{hidePassword2 ? 'Mostrar' : 'Ocultar'}</Text>
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={signUpButton} style={styles.boton}>
-        <Text style={styles.buttonText}>Sign Up!</Text>
+        <Text style={styles.buttonText}>Regístrate!</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
     </View>

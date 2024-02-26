@@ -4,7 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RegisterScreen from './screens/register.js';
 import OpenSesionScreen from './screens/openSesion.js';
-import { styles } from './styles';
+import { styles } from './styles/styles.js';
 
 const Stack = createStackNavigator();
 
@@ -85,14 +85,14 @@ function AppContent() {
     <View style={styles.container}>
       <Text style={styles.titulo}>BUILD</Text>
       <TextInput
-        placeholder='email'
+        placeholder='Email'
         placeholderTextColor="#E0E0CE"
         style={styles.textInput}
         onChangeText={handleEmailChange}
       />
       <View style={styles.passwordInputContainer}>
         <TextInput
-          placeholder='password'
+          placeholder='Contrsaseña'
           placeholderTextColor="#E0E0CE"
           style={styles.textInput}
           onChangeText={handlePasswordChange}
@@ -103,11 +103,11 @@ function AppContent() {
         </TouchableOpacity>
       </View>
       <TouchableOpacity onPress={signInButton} style={styles.boton}>
-        <Text style={styles.buttonText}>Sign In</Text>
+        <Text style={styles.buttonText}>Inicia Sesión</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
       <TouchableOpacity onPress={handleRegisterPress}>
-        <Text style={styles.buttonTextNew}>Create a new account</Text>
+        <Text style={styles.buttonTextNew}>Crear nueva cuenta</Text>
       </TouchableOpacity>
     </View>
   );
