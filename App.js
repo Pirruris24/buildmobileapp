@@ -4,11 +4,15 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RegisterScreen from './screens/register.js';
 import OpenSesionScreen from './screens/openSesion.js';
+import Safest from './screens/safest.js';
+import Business from './screens/business.js';
+import Crime from './screens/crime.js';
+import Transportation from './screens/transportation.js';
+import Recommended from './screens/recommended_location.js';
 import { styles } from './styles/styles.js';
 
 const Stack = createStackNavigator();
-
-function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -48,10 +52,71 @@ function App() {
             },
           }}
         />
+        <Stack.Screen
+          name="Safest"
+          component={Safest} 
+          options={{
+            title: 'SAFEST', 
+            headerTransparent: true,
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Business"
+          component={Business} 
+          options={{
+            title: 'BUSINESS', 
+            headerTransparent: true,
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Crime"
+          component={Crime} 
+          options={{
+            title: 'CRIME', 
+            headerTransparent: true,
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Transportation"
+          component={Transportation} 
+          options={{
+            title: 'TRANSPORTATION', 
+            headerTransparent: true,
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Recommended"
+          component={Recommended} 
+          options={{
+            title: 'RECOMMENDED LOCATION', 
+            headerTransparent: true,
+            headerTintColor: '#000',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
 
 function AppContent() {
   const navigation = useNavigation();

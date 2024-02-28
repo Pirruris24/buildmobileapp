@@ -1,45 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import Menu from './../components/menu';
+// import { styles } from './../styles/mapsStyles';
 
-const SideMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
+const Home = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.menu}>
-        <TouchableOpacity style={styles.option} onPress={toggleMenu}>
-          <Text style={styles.optionText}>{isOpen ? 'Cerrar' : 'Abrir'} Menú</Text>
-        </TouchableOpacity>
-        {isOpen && (
-          <>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Home')}>
-              <Text style={styles.optionText}>Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Safest')}>
-              <Text style={styles.optionText}>Safest</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Business')}>
-              <Text style={styles.optionText}>Business</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Crime')}>
-              <Text style={styles.optionText}>Crime</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Transportation')}>
-              <Text style={styles.optionText}>Transportation</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => console.log('Recommended Location')}>
-              <Text style={styles.optionText}>Recommended Location</Text>
-            </TouchableOpacity>
-          </>
-        )}
+      <View style={styles.menuContainer}>
+        <Menu />
       </View>
     </View>
   );
@@ -48,26 +17,31 @@ const SideMenu = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-start',
-    marginTop: 20,
-    marginRight: 20,
-  },
-  menu: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    elevation: 5,
-    width: 150,
-  },
-  option: {
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  optionText: {
-    fontSize: 16,
-    textAlign: 'center',
+  menuContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 1, // Para asegurar que el menú esté encima del mapa
+    margin:30,
+    // left:20,
+  },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  safestText: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
-export default SideMenu;
+export default Home;

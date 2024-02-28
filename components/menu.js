@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const SideMenu = () => {
+const Menu = () => {
   const navigation = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +27,7 @@ const SideMenu = () => {
         </TouchableOpacity>
         {isOpen && (
           <>
-            <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('Home')}>
+            <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('OpenSesionScreen')}>
               <Text style={styles.optionText}>Home</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('Safest')}>
@@ -42,7 +42,7 @@ const SideMenu = () => {
             <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('Transportation')}>
               <Text style={styles.optionText}>Transportation</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('RecommendedLocation')}>
+            <TouchableOpacity style={styles.option} onPress={() => navigateToScreen('Recommended')}>
               <Text style={styles.optionText}>Recommended Location</Text>
             </TouchableOpacity>
           </>
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
   option: {
     paddingVertical: 10,
     paddingHorizontal: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#ccc',
     alignItems: 'center',
   },
   optionText: {
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SideMenu;
+export default Menu;

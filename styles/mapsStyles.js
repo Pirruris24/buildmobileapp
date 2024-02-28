@@ -3,15 +3,25 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'blue',
+  },
+  menuContainer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    zIndex: 1, // Para asegurar que el menú esté encima del mapa
+    margin:30,
+    // left:20,
   },
   mapContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: '15%', // Espacio en la parte inferior para que el mapa ocupe el 70% de la pantalla
   },
 
   searchContainer: {
     position: 'absolute',
-    bottom: 485,
+    bottom: 485, // Esta posición debería ajustarse o eliminarse si no es necesaria
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
