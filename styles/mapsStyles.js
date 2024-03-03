@@ -1,32 +1,32 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { height } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  menuContainer: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 1, // Para asegurar que el menú esté encima del mapa
-    margin:30,
-    // left:20,
-  },
+  // menuContainer: {
+  //   position: 'absolute',
+  //   top: 0,
+  //   right: 0,
+  //   zIndex: 1,
+  //   margin: 30,
+  // },
   mapContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: '15%', // Espacio en la parte inferior para que el mapa ocupe el 70% de la pantalla
+    paddingBottom: '15%',
+    height: height, // Altura igual a la altura de la ventana
   },
-
   searchContainer: {
     position: 'absolute',
-    bottom: 485, // Esta posición debería ajustarse o eliminarse si no es necesaria
+    bottom: 485,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   inputsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -36,16 +36,22 @@ export const styles = StyleSheet.create({
     height: 70,
   },
   input: {
+    borderRadius: 15, // Ajusta el valor según lo redondeado que desees
+    backgroundColor: '#FFFFFF', // Color de fondo blanco
     flex: 1,
     height: 40,
     width: 120,
-    borderWidth: 1,
-    borderColor: 'gray',
+    // borderWidth: 1,
+    // borderColor: 'gray',
     paddingHorizontal: 10,
     marginRight: 10,
+    zIndex: 1,
+  },
+  inputLabel: {
+    fontWeight: 'bold', // Establece negrita (bold)
   },
   button: {
-    backgroundColor: 'rgba(255,255,255,0.7)',
+    backgroundColor: 'white',
     padding: 10,
     borderRadius: 5,
     width: 100,
@@ -53,7 +59,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   map: {
     ...StyleSheet.absoluteFillObject,
   },

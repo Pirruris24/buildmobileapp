@@ -82,7 +82,7 @@ export default class GoogleMapComponent extends Component {
         </View>
         <View style={styles.inputsContainer}>
           <View style={styles.inputContainer}>
-            <Text>Latitud:</Text>
+            <Text style={styles.inputLabel}>Latitud:</Text>
             <TextInput
               style={styles.input}
               value={this.state.latitudeInput}
@@ -90,7 +90,7 @@ export default class GoogleMapComponent extends Component {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Text>Longitud:</Text>
+            <Text  style={styles.inputLabel}>Longitud:</Text>
             <TextInput
               style={styles.input}
               value={this.state.longitudeInput}
@@ -98,7 +98,7 @@ export default class GoogleMapComponent extends Component {
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={this.handleUpdateCoordinates}>
-            <Text>Actualizar</Text>
+            <Text style={styles.buttonText}>Actualizar</Text>
           </TouchableOpacity>
         </View>
       </View>
