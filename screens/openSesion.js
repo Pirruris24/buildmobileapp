@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, Button } from 'react-native';
 import FlipCard from 'react-native-flip-card';
-import { styles } from '../styles/welcome'; 
+import { styles } from './../styles/welcome'; 
 import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
@@ -23,7 +23,7 @@ const Home = () => {
           <View style={[styles.card]}>
             {/* Back Side */}
             <View style={[styles.face]}>
-              <Text style={[styles.text]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend, lorem.</Text>
+              <Text style={[styles.text]}>BUILD es una aplicacion que te ayuda a poder decidir con mayor facilidad donde hospedarte segun algunos indices (Crimen, hospitales, transporte..).</Text>
             </View>
           </View>
         </FlipCard>
@@ -53,7 +53,7 @@ const Home = () => {
           <View style={[styles.card]}>
             {/* Back Side */}
             <View style={[styles.face]}>
-              <Text style={[styles.text]}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eleifend, lorem.</Text>
+              <Text style={[styles.text]}>Puedes probar nuestra aplicacion pulsando el boton de abajo</Text>
               <View style={styles.buttonContainer}>
                 <Button title="Probar App" onPress={handleProbarPress} />
               </View>
