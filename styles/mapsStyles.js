@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold', // Establece negrita (bold)
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: 'green',
     padding: 10,
     borderRadius: 5,
     width: 100,
@@ -61,5 +61,10 @@ export const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10
   },
 });

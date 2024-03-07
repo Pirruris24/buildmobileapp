@@ -129,7 +129,7 @@ function AppContent() {
   const handlePasswordChange = (text) => setPassword(text);
   const handleTogglePasswordVisibility = () => setHidePassword(!hidePassword);
 
-  const signInButton = () => {
+  const signInButton = async () => {
     if (!email.trim() || !password.trim()) {
       Alert.alert('Campos Vacíos', 'Por favor, complete todos los campos.');
       return;
@@ -138,10 +138,31 @@ function AppContent() {
       Alert.alert('Correo Electrónico Inválido', 'Por favor ingresa un correo electrónico válido.');
       return;
     }
-    navigation.navigate('OpenSesionScreen'); 
-    console.log('Correo electrónico válido:', email);
-    console.log('Contraseña:', password);
+  
+    try {
+      const response = await fetch('http://127.0.0.1:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          buser_email: email,
+          buser_password: password,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Error de red - ' + response.status);
+      }
+  
+      // Si la solicitud fue exitosa, navega a la siguiente pantalla
+      navigation.navigate('OpenSesionScreen');
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      Alert.alert('Error', 'Hubo un problema al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
+    }
   };
+  
 
   const handleRegisterPress = () => navigation.navigate('Register');
 

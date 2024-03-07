@@ -29,6 +29,13 @@ import secrets
 from passlib.context import CryptContext
 from passlib.hash import bcrypt
 import bcrypt
+import plotly.express as px
+
+custom_color_scale = [
+    (0, 'blue'),    # Start color
+    (0.5, 'green'),   # Middle color
+    (1, 'red')    # End color
+]
 
 if not os.path.exists("./src/assets"):
     os.mkdir("./src/assets")
@@ -321,50 +328,105 @@ async def predictZone(longitud: float = -103.36882906094334 , latitud: float=20.
 
     crime_result = pd.DataFrame({'Latitud':crime_centers[:,0], 'Longitud':crime_centers[:,1], 'Incidencias':crime_counts})
 
-    #Clusterizacion de paradas de TP
-    cursor = conexion.cursor()
-    cursor.execute(f"SELECT * FROM build.paradasdecamion;")
 
-    tp_data = cursor.fetchall()
-    tp_data = list(zip(*tp_data))
+
+     #Clusterizacion de farmacias
+    cursor = conexion.cursor()
+    cursor.execute(f"SELECT Longitud, Latitud FROM build.farmacias;")
+
+    farm_data = cursor.fetchall()
+    farm_data = list(zip(*farm_data))
 
     conexion.commit()
 
-    tp_df = pd.DataFrame({'ID':tp_data[0], 'Latitud':tp_data[1], 'Longitud':tp_data[2]})
-    tp_df["Latitud"] = pd.to_numeric(tp_df["Latitud"])
-    tp_df["Longitud"] = pd.to_numeric(tp_df["Longitud"])
+    farm_df = pd.DataFrame({'Latitud':farm_data[1], 'Longitud':farm_data[0]})
+    farm_df["Latitud"] = pd.to_numeric(farm_df["Latitud"])
+    farm_df["Longitud"] = pd.to_numeric(farm_df["Longitud"])
+    farm_df = farm_df.dropna()
+
+    kmeans = KMeans(n_clusters = 100, init ='k-means++', tol=0)
+    kmeans.fit(farm_df[farm_df.columns[0:2]]) # Compute k-means clustering.
+
+    farm_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, farm_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+    farm_result = pd.DataFrame({'Latitud':farm_centers[:,0], 'Longitud':farm_centers[:,1], 'Farmacias':farm_counts}) 
+    
+
+
+     #Clusterizacion de hospitales
+    cursor = conexion.cursor()
+    cursor.execute(f"SELECT Longitud, Latitud FROM build.hospitales;")
+
+    hosp_data = cursor.fetchall()
+    hosp_data = list(zip(*hosp_data))
+
+    conexion.commit()
+
+    hosp_df = pd.DataFrame({'Latitud':hosp_data[1], 'Longitud':hosp_data[0]})
+    hosp_df["Latitud"] = pd.to_numeric(hosp_df["Latitud"])
+    hosp_df["Longitud"] = pd.to_numeric(hosp_df["Longitud"])
+    hosp_df = hosp_df.dropna()
+
+    kmeans = KMeans(n_clusters = 100, init ='k-means++', tol=0)
+    kmeans.fit(hosp_df[hosp_df.columns[0:2]]) # Compute k-means clustering.
+
+    hosp_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, hosp_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+    hosp_result = pd.DataFrame({'Latitud':hosp_centers[:,0], 'Longitud':hosp_centers[:,1], 'Hospitales':hosp_counts}) 
+
+
+   
+
+    #Clusterizacion de police stations
+    cursor = conexion.cursor()
+    cursor.execute(f"SELECT Longitud, Latitud FROM build.estaciones_de_policia;")
+
+    poli_data = cursor.fetchall()
+    poli_data = list(zip(*poli_data))
+
+    conexion.commit()
+
+    poli_df = pd.DataFrame({'Latitud':poli_data[1], 'Longitud':poli_data[0]})
+    poli_df["Latitud"] = pd.to_numeric(poli_df["Latitud"])
+    poli_df["Longitud"] = pd.to_numeric(poli_df["Longitud"])
+    poli_df = poli_df.dropna()
 
     kmeans = KMeans(n_clusters = 30, init ='k-means++', tol=0)
-    kmeans.fit(tp_df[tp_df.columns[1:3]]) # Compute k-means clustering.
+    kmeans.fit(poli_df[poli_df.columns[0:2]]) # Compute k-means clustering.
 
-    tp_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    poli_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
     db1_labels = kmeans.labels_
-    labels, tp_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+    labels, poli_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
 
-    tp_result = pd.DataFrame({'Latitud':tp_centers[:,0], 'Longitud':tp_centers[:,1], 'Puntos de acceso':tp_counts})
+    poli_result = pd.DataFrame({'Latitud':poli_centers[:,0], 'Longitud':poli_centers[:,1], 'Policia':poli_counts}) 
 
-    #Clusterizacion de escuelas
+
+    #Clusterizacion de hoteles
     cursor = conexion.cursor()
-    cursor.execute(f"SELECT Longitud, Latitud FROM build.secundaria;")
+    cursor.execute(f"SELECT Longitud, Latitud FROM build.hoteles;")
 
-    sch_data = cursor.fetchall()
-    sch_data = list(zip(*sch_data))
+    hot_data = cursor.fetchall()
+    hot_data = list(zip(*hot_data))
 
     conexion.commit()
 
-    sch_df = pd.DataFrame({'Latitud':sch_data[1], 'Longitud':sch_data[0]})
-    sch_df["Latitud"] = pd.to_numeric(sch_df["Latitud"])
-    sch_df["Longitud"] = pd.to_numeric(sch_df["Longitud"])
-    sch_df = sch_df.dropna()
+    hot_df = pd.DataFrame({'Latitud':hot_data[1], 'Longitud':hot_data[0]})
+    hot_df["Latitud"] = pd.to_numeric(hot_df["Latitud"])
+    hot_df["Longitud"] = pd.to_numeric(hot_df["Longitud"])
+    hot_df = hot_df.dropna()
 
-    kmeans = KMeans(n_clusters = 300, init ='k-means++', tol=0)
-    kmeans.fit(sch_df[sch_df.columns[0:2]]) # Compute k-means clustering.
+    kmeans = KMeans(n_clusters = 100, init ='k-means++', tol=0)
+    kmeans.fit(hot_df[hot_df.columns[0:2]]) # Compute k-means clustering.
 
-    sch_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    hot_centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
     db1_labels = kmeans.labels_
-    labels, sch_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+    labels, hot_counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
 
-    sch_result = pd.DataFrame({'Latitud':sch_centers[:,0], 'Longitud':sch_centers[:,1], 'Escuelas':sch_counts})                                            
+    hot_result = pd.DataFrame({'Latitud':hot_centers[:,0], 'Longitud':hot_centers[:,1], 'Hoteles':hot_counts})                                           
        
     is_running = True
     while is_running:
@@ -380,28 +442,50 @@ async def predictZone(longitud: float = -103.36882906094334 , latitud: float=20.
         
         crime_index /= max_crimes
 
-        #Obtener indice de acceso a tp
-        max_tp = tp_result["Puntos de acceso"].max()
-        tp_index = 0
-        for index, row in tp_result.iterrows():
+        #Obtener indice de Farmacias
+        max_farm = farm_result["Farmacias"].max()
+        farm_index = 0
+        for index, row in farm_result.iterrows():
             coords_temp = (row['Latitud'], row['Longitud'])
             if geopy.distance.geodesic(coords_original, coords_temp).km < 3:
-                tp_index += row['Puntos de acceso']
+                farm_index += row['Farmacias']
         
-        tp_index /= max_tp
+        farm_index /= max_farm
 
-        #Obtener indice de cercania a escuelas
-        max_sch = sch_result["Escuelas"].max()
-        sch_index = 0
-        for index, row in sch_result.iterrows():
+        #Obtener indice de hospitales
+        max_hosp = hosp_result["Hospitales"].max()
+        hosp_index = 0
+        for index, row in hosp_result.iterrows():
             coords_temp = (row['Latitud'], row['Longitud'])
             if geopy.distance.geodesic(coords_original, coords_temp).km < 3:
-                sch_index += row['Escuelas']
+                hosp_index += row['Hospitales']
         
-        sch_index /= max_sch
+        hosp_index /= max_hosp
+
+        #Obtener indice de poli
+        max_poli = poli_result["Policia"].max()
+        poli_index = 0
+        for index, row in poli_result.iterrows():
+            coords_temp = (row['Latitud'], row['Longitud'])
+            if geopy.distance.geodesic(coords_original, coords_temp).km < 3:
+                poli_index += row['Policia']
+        
+        poli_index /= max_poli
+
+        #Obtener indice de hoteles
+        max_hot = hot_result["Hoteles"].max()
+        hot_index = 0
+        for index, row in hot_result.iterrows():
+            coords_temp = (row['Latitud'], row['Longitud'])
+            if geopy.distance.geodesic(coords_original, coords_temp).km < 3:
+                hot_index += row['Hoteles']
+        
+        hot_index /= max_hot
 
         
-        total_index = 1 + tp_index - (crime_index * 2)- sch_index
+        #total_index = 1 + hosp_index - (crime_index * 2) - (farm_index * 0.5) - (police_index * 0.5) - (hotel_index * 0.9)
+        total_index = 1 + (hosp_index) - (crime_index * 5) + (farm_index) + (poli_index)
+
 
         if total_index < 0:
             print(total_index)
@@ -417,8 +501,10 @@ async def predictZone(longitud: float = -103.36882906094334 , latitud: float=20.
                 "latitud":latitud,
                 "longitud":longitud,
                 "crimeIndex":crime_index,
-                "transportIndex":tp_index,
-                "schoolIndex":sch_index,
+                "farmaciasIndex":farm_index,
+                "hospitalesIndex":hosp_index,
+                "policiaIndex":poli_index,
+                "hotelesIndex":hot_index,
                 "totalIndex":total_index
             }
         
@@ -559,6 +645,151 @@ async def getBusinessMap():
     fig = px.scatter_mapbox(result, lat="Latitud", lon="Longitud", color="Incidetes", size="Incidetes", color_continuous_scale=px.colors.diverging.Picnic, zoom=7, title="Cantidad negocios por zona")
     fig.write_image("./src/assets/allbussinesmap.png", width=1200, height=800, scale=1)
     return FileResponse("./src/assets/allbussinesmap.png")
+
+@app.get('/hospitalMap')
+async def getBusinessMap():
+    conexion = mysql.connector.connect(user=db_user, password=db_password,
+                                        host='localhost', database='build', auth_plugin='mysql_native_password')
+    cursor = conexion.cursor()
+    cursor.execute(
+        f"SELECT Latitud, Longitud FROM build.hospitales")
+
+    data = cursor.fetchall()
+    data = list(zip(*data))
+
+    conexion.commit()
+
+    df = pd.DataFrame({'Latitud':data[0], 'Longitud':data[1]})
+
+    df["Latitud"] = pd.to_numeric(df["Latitud"])
+    df["Longitud"] = pd.to_numeric(df["Longitud"])
+
+    kmeans = KMeans(n_clusters = 15, init ='k-means++')
+    df = df.dropna()
+    print(df[df.columns[0:2]])
+    kmeans.fit(df[df.columns[0:2]]) # Compute k-means clustering.
+
+    centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+
+    result = pd.DataFrame({'Latitud':centers[:,0], 'Longitud':centers[:,1], 'Cantidad':counts, 'Label':list(range(1, len(counts)+1))})
+
+    px.set_mapbox_access_token("pk.eyJ1IjoiYW5kLW1vbCIsImEiOiJjbGI3MTJqcmwwNmYzM3VwOTd5NWtxeTZlIn0.l4q0owDO-L1SRTUN7z16VQ")
+
+    fig = px.scatter_mapbox(result, lat="Latitud", lon="Longitud", color="Cantidad", size="Cantidad", color_continuous_scale=px.colors.diverging.Picnic, zoom=7, title="Cantidad de hospitales por zona")
+    fig.write_image("./src/assets/allhospitalsmap.png", width=1200, height=800, scale=1)
+    return FileResponse("./src/assets/allhospitalsmap.png")
+
+@app.get('/pharmacyMap')
+async def getPharmacyMap():
+    conexion = mysql.connector.connect(user=db_user, password=db_password,
+                                        host='localhost', database='build', auth_plugin='mysql_native_password')
+    cursor = conexion.cursor()
+    cursor.execute(
+        f"SELECT Latitud, Longitud FROM build.farmacias")
+
+    data = cursor.fetchall()
+    data = list(zip(*data))
+
+    conexion.commit()
+
+    df = pd.DataFrame({'Latitud':data[0], 'Longitud':data[1]})
+
+    df["Latitud"] = pd.to_numeric(df["Latitud"])
+    df["Longitud"] = pd.to_numeric(df["Longitud"])
+
+    kmeans = KMeans(n_clusters = 100, init ='k-means++')
+    df = df.dropna()
+    print(df[df.columns[0:2]])
+    kmeans.fit(df[df.columns[0:2]]) # Compute k-means clustering.
+
+    centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+
+    result = pd.DataFrame({'Latitud':centers[:,0], 'Longitud':centers[:,1], 'Incidetes':counts, 'Label':list(range(1, len(counts)+1))})
+
+    px.set_mapbox_access_token("pk.eyJ1IjoiYW5kLW1vbCIsImEiOiJjbGI3MTJqcmwwNmYzM3VwOTd5NWtxeTZlIn0.l4q0owDO-L1SRTUN7z16VQ")
+
+    fig = px.scatter_mapbox(result, lat="Latitud", lon="Longitud", color="Incidetes", size="Incidetes", color_continuous_scale=px.colors.diverging.Picnic, zoom=7, title="Cantidad de farmacias por zona")
+    fig.write_image("./src/assets/allpharmacymap.png", width=1200, height=800, scale=1)
+    return FileResponse("./src/assets/allpharmacymap.png")
+
+
+@app.get('/hotelMap')
+async def getHotelMap():
+    conexion = mysql.connector.connect(user=db_user, password=db_password,
+                                        host='localhost', database='build', auth_plugin='mysql_native_password')
+    cursor = conexion.cursor()
+    cursor.execute(
+        f"SELECT Latitud, Longitud FROM build.hoteles")
+
+    data = cursor.fetchall()
+    data = list(zip(*data))
+
+    conexion.commit()
+
+    df = pd.DataFrame({'Latitud':data[0], 'Longitud':data[1]})
+
+    df["Latitud"] = pd.to_numeric(df["Latitud"])
+    df["Longitud"] = pd.to_numeric(df["Longitud"])
+
+    kmeans = KMeans(n_clusters = 100, init ='k-means++')
+    df = df.dropna()
+    print(df[df.columns[0:2]])
+    kmeans.fit(df[df.columns[0:2]]) # Compute k-means clustering.
+
+    centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+
+    result = pd.DataFrame({'Latitud':centers[:,0], 'Longitud':centers[:,1], 'Incidetes':counts, 'Label':list(range(1, len(counts)+1))})
+
+    px.set_mapbox_access_token("pk.eyJ1IjoiYW5kLW1vbCIsImEiOiJjbGI3MTJqcmwwNmYzM3VwOTd5NWtxeTZlIn0.l4q0owDO-L1SRTUN7z16VQ")
+
+    fig = px.scatter_mapbox(result, lat="Latitud", lon="Longitud", color="Incidetes", size="Incidetes", color_continuous_scale=px.colors.diverging.Picnic, zoom=7, title="Cantidad de hoteles por zona")
+    fig.write_image("./src/assets/allhotelmap.png", width=1200, height=800, scale=1)
+    return FileResponse("./src/assets/allhotelmap.png")
+
+@app.get('/policeMap')
+async def getPoliceMap():
+    conexion = mysql.connector.connect(user=db_user, password=db_password,
+                                        host='localhost', database='build', auth_plugin='mysql_native_password')
+    cursor = conexion.cursor()
+    cursor.execute(
+        f"SELECT Latitud, Longitud FROM build.estaciones_de_policia")
+
+    data = cursor.fetchall()
+    data = list(zip(*data))
+
+    conexion.commit()
+
+    df = pd.DataFrame({'Latitud':data[0], 'Longitud':data[1]})
+
+    df["Latitud"] = pd.to_numeric(df["Latitud"])
+    df["Longitud"] = pd.to_numeric(df["Longitud"])
+
+    kmeans = KMeans(n_clusters = 15, init ='k-means++')
+    df = df.dropna()
+    print(df[df.columns[0:2]])
+    kmeans.fit(df[df.columns[0:2]]) # Compute k-means clustering.
+
+    centers = kmeans.cluster_centers_ # Coordinates of cluster centers.
+    db1_labels = kmeans.labels_
+    labels, counts = np.unique(db1_labels[db1_labels>=0], return_counts=True)
+
+
+    result = pd.DataFrame({'Latitud':centers[:,0], 'Longitud':centers[:,1], 'Cantidad':counts, 'Label':list(range(1, len(counts)+1))})
+
+    px.set_mapbox_access_token("pk.eyJ1IjoiYW5kLW1vbCIsImEiOiJjbGI3MTJqcmwwNmYzM3VwOTd5NWtxeTZlIn0.l4q0owDO-L1SRTUN7z16VQ")
+
+    fig = px.scatter_mapbox(result, lat="Latitud", lon="Longitud", color="Cantidad", size="Cantidad", color_continuous_scale=px.colors.diverging.Picnic, zoom=7, title="Cantidad de estaciones de polica por zona")
+    fig.write_image("./src/assets/allpolicemap.png", width=1200, height=800, scale=1)
+    return FileResponse("./src/assets/allpolicemap.png")
 
 @app.get('/businessMap/{municipio}')
 async def getBusinessMap(municipio: str):
