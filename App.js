@@ -41,7 +41,7 @@ const App = () => {
             },
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name="OpenSesionScreen"
           component={OpenSesionScreen} 
           options={{
@@ -100,7 +100,7 @@ const App = () => {
               fontWeight: 'bold',
             },
           }}
-        />
+        /> */}
         <Stack.Screen
           name="Recommended"
           component={Recommended} 
