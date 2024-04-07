@@ -41,7 +41,7 @@ const App = () => {
             },
           }}
         />
-        {/* <Stack.Screen
+         <Stack.Screen
           name="OpenSesionScreen"
           component={OpenSesionScreen} 
           options={{
@@ -53,6 +53,7 @@ const App = () => {
             },
           }}
         />
+        {/*
         <Stack.Screen
           name="Safest"
           component={Safest} 
@@ -138,30 +139,33 @@ function AppContent() {
       Alert.alert('Correo Electrónico Inválido', 'Por favor ingresa un correo electrónico válido.');
       return;
     }
+
+    navigation.navigate('OpenSesionScreen');
+
   
-    try {
-      const response = await fetch('http://127.0.0.1:8000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          buser_email: email,
-          buser_password: password,
-        }),
-      });
+    // try {
+    //   const response = await fetch('http://127.0.0.1:8000/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       buser_email: email,
+    //       buser_password: password,
+    //     }),
+    //   });
   
-      if (!response.ok) {
-        throw new Error('Error de red - ' + response.status);
-      }
+    //   if (!response.ok) {
+    //     throw new Error('Error de red - ' + response.status);
+    //   }
   
-      // Si la solicitud fue exitosa, navega a la siguiente pantalla
-      navigation.navigate('OpenSesionScreen');
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-      Alert.alert('Error', 'Hubo un problema al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
-    }
-  };
+    //   // Si la solicitud fue exitosa, navega a la siguiente pantalla
+    //   navigation.navigate('OpenSesionScreen');
+    // } catch (error) {
+    //   console.error('Error al realizar la solicitud:', error);
+    //   Alert.alert('Error', 'Hubo un problema al iniciar sesión. Por favor, inténtalo de nuevo más tarde.');
+    // }
+  };  
   
 
   const handleRegisterPress = () => navigation.navigate('Register');

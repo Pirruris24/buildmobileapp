@@ -76,13 +76,6 @@ const RegisterScreen = () => {
         onChangeText={setName}
       />
       <TextInput
-        placeholder='Apellido(s)'
-        placeholderTextColor="#E0E0CE"
-        style={styles.textInput}
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      <TextInput
         placeholder='Email'
         placeholderTextColor="#E0E0CE"
         style={styles.textInput}

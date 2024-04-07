@@ -10,7 +10,7 @@ class MapContainer extends Component {
       markers: [],
       apiResponse: null,
       storedData: null,
-      activeMarker: {},
+      activeMarker: {}, 
       selectedPlace: {},
       userClickedCoordinates: { latitude: 0, longitude: 0 },
       combinedCoordinates: '',
