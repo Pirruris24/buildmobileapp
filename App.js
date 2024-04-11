@@ -5,10 +5,11 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import RegisterScreen from './screens/register.js';
 import OpenSesionScreen from './screens/openSesion.js';
-import Safest from './screens/safest.js';
-import Business from './screens/business.js';
-import Crime from './screens/crime.js';
-import Transportation from './screens/transportation.js';
+import LogIn from './screens/login.js';
+// import Safest from './screens/safest.js';
+// import Business from './screens/business.js';
+// import Crime from './screens/crime.js';
+// import Transportation from './screens/transportation.js';
 import Recommended from './screens/recommended_location.js';
 import { styles } from './styles/styles.js';
 
@@ -18,8 +19,20 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="BIENVENIDO!"
+          name="BUILD!"
           component={AppContent}
+          options={{
+            title: 'BUILD',
+            headerTransparent: true,
+            headerTintColor: '#e0e0ce',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+        />
+        <Stack.Screen
+          name="Inicia"
+          component={LogIn}
           options={{
             title: 'Inicia Sesión',
             headerTransparent: true,
@@ -33,7 +46,7 @@ const App = () => {
           name="Register"
           component={RegisterScreen}
           options={{
-            title: 'Register!',
+            title: 'Registro!',
             headerTransparent: true,
             headerTintColor: '#e0e0ce',
             headerTitleStyle: {
@@ -106,7 +119,7 @@ const App = () => {
           name="Recommended"
           component={Recommended} 
           options={{
-            title: 'RECOMMENDED LOCATION', 
+            title: 'Recomendar Ubicación', 
             headerTransparent: true,
             headerTintColor: '#000',
             headerTitleStyle: {
@@ -167,34 +180,14 @@ function AppContent() {
     // }
   };  
   
-
+  const handleLogInPress = () => navigation.navigate('Inicia')
   const handleRegisterPress = () => navigation.navigate('Register');
-
-  const isValidEmail = (text) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
 
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>BUILD</Text>
-      <TextInput
-        placeholder='Email'
-        placeholderTextColor="#E0E0CE"
-        style={styles.textInput}
-        onChangeText={handleEmailChange}
-      />
-      <View style={styles.passwordInputContainer}>
-        <TextInput
-          placeholder='Contrsaseña'
-          placeholderTextColor="#E0E0CE"
-          style={styles.textInput}
-          onChangeText={handlePasswordChange}
-          secureTextEntry={hidePassword}
-        />
-        <TouchableOpacity onPress={handleTogglePasswordVisibility} style={styles.togglePasswordButton}>
-          <Text style={styles.togglePasswordButtonText}>{hidePassword ? 'Mostrar' : 'Ocultar'}</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity onPress={signInButton} style={styles.boton}>
-        <Text style={styles.buttonText}>Inicia Sesión</Text>
+      <TouchableOpacity onPress={handleLogInPress} style={styles.boton}>
+        <Text style={styles.buttonText}>LogIn</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
       <TouchableOpacity onPress={handleRegisterPress}>

@@ -67,7 +67,7 @@ const RegisterScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.titulo, { fontSize: 60 }]}>REGISTER</Text>
+      <Text style={[styles.titulo, { fontSize: 60 }]}>REGISTRO</Text>
       <TextInput
         placeholder='Nombre(s)'
         placeholderTextColor="#E0E0CE"
