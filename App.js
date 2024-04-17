@@ -6,10 +6,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RegisterScreen from './screens/register.js';
 import OpenSesionScreen from './screens/openSesion.js';
 import LogIn from './screens/login.js';
-// import Safest from './screens/safest.js';
-// import Business from './screens/business.js';
-// import Crime from './screens/crime.js';
-// import Transportation from './screens/transportation.js';
 import Recommended from './screens/recommended_location.js';
 import { styles } from './styles/styles.js';
 

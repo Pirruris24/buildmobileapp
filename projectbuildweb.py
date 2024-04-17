@@ -215,6 +215,10 @@ def get_table_data(table_name, db_host, db_user, db_password, db_name):
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://172.20.10.4:8081",
+    "exp://172.20.10.4:8081",
+    "http://192.168.56.1:8081",
+    
 ]
 
 app.add_middleware(
@@ -509,6 +513,26 @@ async def predictZone(longitud: float = -103.36882906094334 , latitud: float=20.
             }
         
             return total_rsult
+
+
+@app.get('/fetchNearbyHotels/{lng}/{lat}')
+async def get_nearby_hotels(lng: float, lat: float):
+    
+        # Connect to MySQL database
+        connection = mysql.connector.connect(
+            user=db_user, password=db_password, host='localhost', database='build', auth_plugin='mysql_native_password'
+        )
+
+        # Execute SQL query to fetch nearby hotels based on coordinates
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT `Nombre de la Unidad Económica` FROM build.hoteles WHERE ABS(Latitud - {lat}) <= 0.05 AND ABS(Longitud - {lng}) <= 0.05  LIMIT 10")
+        hotels_data = cursor.fetchall()
+        
+        if not hotels_data:
+            raise HTTPException(status_code=404, detail="No nearby hotels found")
+        
+
+        return hotels_data
 
 
 @app.get('/crimeBars/{municipio}')

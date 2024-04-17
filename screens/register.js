@@ -4,6 +4,7 @@ import {Alert} from 'react-native';
 import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { styles } from './../styles/styles';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -14,6 +15,7 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [hidePassword1, setHidePassword1] = useState(true); // Estado para el primer campo de contraseña
   const [hidePassword2, setHidePassword2] = useState(true); // Estado para el segundo campo de contraseña
+  const [error, setError] = useState(null); // State variable for error message
 
   const handleEmailChange = (text) => {
     setEmail(text);
@@ -38,7 +40,7 @@ const RegisterScreen = () => {
   const signUpButton = () => {
     // console.log('Botón presionado');
 
-    if (!name || !lastName || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword) {
       Alert.alert('Campos Vacíos', 'Por favor, complete todos los campos.');
       return;
     }
@@ -57,6 +59,15 @@ const RegisterScreen = () => {
     console.log('Nombre:', name);
     console.log('Apellido:', lastName);
     console.log('Contraseña:', password);
+    try {
+      const response = axios.put(`http://172.20.10.4:8081/addBuildUser/${name}/${email}/${password}`);
+      
+      navigation.goBack();
+      
+  } catch (error) {
+      console.error('Error logging in:', error); // Log the error for debugging purposes
+      setError('Ha ocurrido un error. Por favor, intenta de nuevo.'); // Generic error message for the user
+  }
     navigation.goBack();
   };
 
