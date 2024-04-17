@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { StatusBar, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { StatusBar, Text, View, TextInput, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './../styles/styles';
 
@@ -43,7 +43,8 @@ function LogIn() {
     const isValidEmail = (text) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text);
 
     return (
-        <View style={styles.container}>
+        <ImageBackground style={styles.container} source={require('./../assets/bg.png')}>
+
             <Text style={styles.titulo}>BUILD</Text>
             <TextInput
                 placeholder='Email'
@@ -71,7 +72,8 @@ function LogIn() {
             <TouchableOpacity onPress={handleRegisterPress}>
                 <Text style={styles.buttonTextNew}>Crear nueva cuenta</Text>
             </TouchableOpacity>
-        </View>
+            </ImageBackground>
+
     );
 }
 

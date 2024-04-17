@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {Alert} from 'react-native';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { styles } from './../styles/styles';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
@@ -77,7 +77,8 @@ const RegisterScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ImageBackground style={styles.container} source={require('./../assets/bg.png')}>
+
       <Text style={[styles.titulo, { fontSize: 60 }]}>REGISTRO</Text>
       <TextInput
         placeholder='Nombre(s)'
@@ -123,7 +124,8 @@ const RegisterScreen = () => {
         <Text style={styles.buttonText}>Regístrate!</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
-    </View>
+      </ImageBackground>
+
   );
 };
 

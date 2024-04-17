@@ -6,8 +6,18 @@ export const styles = StyleSheet.create({
     backgroundColor: '#142375',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: 'url: "./assets/background.jpg" ',
     backgroundSize: 'cover',
+  },
+
+  description:{
+    color: '#E3DAC9',
+    textAlign: 'justify',
+    // fontSize: 18,
+    padding: 10
+  },
+
+  togglePasswordButtonText:{
+    color: '#E3DAC9',
   },
 
   stackHeader: {
@@ -62,7 +72,9 @@ export const styles = StyleSheet.create({
   },
 
   titulo: {
-    fontSize: 80,
+    fontSize: 70,
+    margin: 10,
+    padding: 10,
     color: '#E3DAC9',
     fontWeight: 'bold',
     textShadowColor: 'rgba(255, 255, 255, 0.75)',
