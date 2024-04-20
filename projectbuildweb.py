@@ -215,8 +215,8 @@ def get_table_data(table_name, db_host, db_user, db_password, db_name):
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "http://172.20.10.4:8081",
-    "exp://172.20.10.4:8081",
+    "http://192.168.100.47:8081",
+    "exp://192.168.100.47:8081",
     "http://192.168.56.1:8081",
     
 ]

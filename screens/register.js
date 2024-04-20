@@ -60,7 +60,7 @@ const RegisterScreen = () => {
     console.log('Apellido:', lastName);
     console.log('Contraseña:', password);
     try {
-      const response = axios.put(`http://172.20.10.4:8081/addBuildUser/${name}/${email}/${password}`);
+      const response = axios.put(`http://192.168.100.47:8081/addBuildUser/${name}/${email}/${password}`);
       
       navigation.goBack();
       

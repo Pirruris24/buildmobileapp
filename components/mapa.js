@@ -63,7 +63,7 @@ export default class GoogleMapComponent extends Component {
 
       // Make an API request with the entered coordinates using Axios
       try {
-        const response = await axios.get(`http://172.20.10.4:8081/predictZone/${enteredLng}/${enteredLat}`);
+        const response = await axios.get(`http://192.168.100.47:8081/predictZone/${enteredLng}/${enteredLat}`);
 
         if (response.status === 200) {
           const data = response.data;
@@ -102,7 +102,7 @@ export default class GoogleMapComponent extends Component {
     // Make an API request to fetch nearby hotels
     try {
       const response = await fetch(
-        `http://172.20.10.4:8081/fetchNearbyHotels/${lng}/${lat}`
+        `http://192.168.100.47:8081/fetchNearbyHotels/${lng}/${lat}`
       );
   
       if (!response.ok) {
@@ -141,6 +141,15 @@ export default class GoogleMapComponent extends Component {
                 key={index}
                 coordinate={marker}
                 pinColor={marker.color}
+                title={
+                marker.color === 'blue'
+                  ? 'Blue is Set Marker'
+                  : marker.color === 'yellow'
+                  ? 'Yellow is Position Marker'
+                  : marker.color === 'green'
+                  ? 'Green is Prediction Marker'
+                  : null
+              }
               />
             ))}
           </MapView>

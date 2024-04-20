@@ -26,7 +26,7 @@ function LogIn() {
         }
 
         try {
-            const response = await axios.post(`http://172.20.10.4:8081/login/${email} ${password}`);
+            const response = await axios.post(`http://192.168.100.47:8081/login/${email} ${password}`);
             
                 navigation.navigate('Recommended');
                 setError(null);
